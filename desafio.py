@@ -19,12 +19,35 @@ while True:
     opcao = input(menu)
 
     if opcao == "0":
-        print('Depositar')
+        valor_deposito = float(input("Digite o valor que deseja depositar: "))
+
+        if valor_deposito > 0:
+            saldo += valor_deposito
+            print('Operação realizada com sucesso!')
+        else:
+            print('Operação falhou! O valor informado é inválido.')
 
     elif opcao == "1":
-        if numero_saques_realizados < 3:
+        valor_saque = float(input("Digite o valor que deseja sacar: "))
 
-            print("Sacar")
+        
+        if saldo < valor_saque:
+            print("Operação falhou! Saldo insuficiente.")
+
+        elif numero_saques_realizados >= LIMITE_SAQUES:
+            print("Operação falhou! Número máximo de saques excedido.")
+
+        elif valor_saque > limite:
+            print("Operação falhou! O valor do saque excede o limite.")
+
+        elif valor_saque > 0:
+            saldo -= valor_saque
+            numero_saques_realizados += 1
+            extrato = extrato + f"Saque: R$ {valor_saque:.2f}\n"
+            print("Operação realizada com sucesso!") 
+
+        else:
+            print("Operação falhou! O valor informado é inválido.")     
 
     elif opcao == "2":
         print("Extrato")
