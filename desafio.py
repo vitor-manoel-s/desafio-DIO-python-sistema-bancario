@@ -23,6 +23,7 @@ while True:
 
         if valor_deposito > 0:
             saldo += valor_deposito
+            extrato = extrato + f"Deposito: R$ {valor_deposito:.2f}\n"
             print('Operação realizada com sucesso!')
         else:
             print('Operação falhou! O valor informado é inválido.')
@@ -50,9 +51,16 @@ while True:
             print("Operação falhou! O valor informado é inválido.")     
 
     elif opcao == "2":
-        print("Extrato")
-    
+        print(" EXTRATO ".center(50, "="))
+        if not extrato: 
+            print("Não foram realizadas movimentações.")
+        else:
+            print(extrato)
+        print(f"\nSaldo: R$ {saldo:.2f}")
+        print("="*50)
+
     elif opcao == "3":
+        print("Saindo...")
         break
 
     else:
