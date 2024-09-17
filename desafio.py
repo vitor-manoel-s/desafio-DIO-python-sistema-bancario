@@ -1,15 +1,33 @@
 from datetime import date
 
-menu = """
+
+def menu_opcoes():
+    menu = """
+    =========== MENU ==========
+
+    [0] Deposito
+    [1] Saque
+    [2] Extrato
+    [3] Sair
+
+    ===========================
+
+    => """
+    
+    return input(menu)
 
 
-[0] Deposito
-[1] Saque
-[2] Extrato
-[3] Sair
+def depositar(valor, saldo, extrato, total_transacoes, /):
+    if valor > 0:
+        saldo += valor
+        extrato += atualizar_extrato(valor=valor, tipo_transacao='Deposito')
 
-
-=> """
+        print("Operação realizada com sucesso!")
+        
+        return saldo, extrato, total_transacoes+1
+    
+    else:
+        print('Operação falhou! O valor informado é inválido.')
 
 
 def sacar(*, valor, saldo, extrato, limite, total_saques, total_transacoes):
@@ -21,9 +39,12 @@ def sacar(*, valor, saldo, extrato, limite, total_saques, total_transacoes):
 
     elif valor > 0:
         saldo -= valor
-        extrato += atualizar_extrato(valor=valor, tipo_transacao='Deposito')
+        extrato += atualizar_extrato(valor=valor, tipo_transacao='Saque')
+        
         print("Operação realizada com sucesso!")
+        
         return saldo, extrato, total_saques+1, total_transacoes+1
+    
     else:
         print("Operação falhou! O valor informado é inválido.")
 
@@ -52,7 +73,7 @@ def main():
     LIMITE_TRANSACOES = 10
 
     while True:
-        opcao = input(menu)
+        opcao = menu_opcoes()
 
         if opcao == "0":
             if total_transacoes >= LIMITE_TRANSACOES:
@@ -60,14 +81,7 @@ def main():
                 continue
 
             valor_deposito = float(input("Digite o valor que deseja depositar: "))
-
-            if valor_deposito > 0:
-                saldo += valor_deposito
-                total_transacoes += 1
-                extrato += (f"Tipo da Transação: Deposito    Valor: R$ {valor_deposito:.2f}    Dia da transação: {date.today()}\n")
-                print('Operação realizada com sucesso!')
-            else:
-                print('Operação falhou! O valor informado é inválido.')
+            saldo, extrato, total_transacoes = depositar(valor_deposito, saldo, extrato, total_transacoes)
 
         elif opcao == "1":
             if total_transacoes >= LIMITE_TRANSACOES:
