@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import datetime
 
 
 def menu_opcoes():
@@ -50,7 +50,7 @@ def sacar(*, valor, saldo, extrato, limite, total_saques, total_transacoes):
 
 
 def atualizar_extrato(*,valor, tipo_transacao):
-    return (f"Tipo da Transação: {tipo_transacao}    Valor: R$ {valor:.2f}    Dia da transação: {date.today()}\n")
+    return (f"Tipo da Transação: {tipo_transacao}    Valor: R$ {valor:.2f}    Data da transação: {datetime.now()}\n")
 
 
 def exibir_extrato(saldo, extrato):
