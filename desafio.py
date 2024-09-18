@@ -5,10 +5,12 @@ def menu_opcoes():
     menu = """
     =========== MENU ==========
 
-    [0] Deposito
-    [1] Saque
-    [2] Extrato
-    [3] Sair
+    [1] Deposito
+    [2] Saque
+    [3] Extrato
+    [4] Criar Usuário
+    [5] Criar Conta Corrente
+    [0] Sair
 
     ===========================
 
@@ -67,10 +69,52 @@ def exibir_extrato(saldo, extrato):
     print("="*100)
 
 
+def filtrar_usuarios(usuarios,cpf):
+    usuarios_filtrados = [usuario for usuario in usuarios if usuario['CPF'] == cpf]
+    return usuarios_filtrados if usuarios_filtrados else None
+
+
+def cadastrar_usuario(usuarios):
+        nome_usuario = input('Nome completo do usuário: ')
+        cpf = input('Informe o cpf(somente números): ')
+        cpf = cpf.replace('.', '', 2)
+        cpf = cpf.replace('-', '')
+        
+        existe_usuario = filtrar_usuarios(usuarios, cpf)
+        
+        if existe_usuario:
+            print(f'\nJá existe usuário cadastrado com o CPF: {cpf}')
+            return
+
+        data_nascimento = input('Data de nascimento do usuário: ')
+        logradouro = input('Digite o logradouro: ')
+        numero = input('Digite o número do endereço: ')
+        bairro = input('Digite o bairro: ')
+        cidade = input('Digite a cidade: ')
+        sigla_estado = input('Digite a sigla do estado: ')
+        endereco = f'{logradouro}, {numero} - {bairro} - {cidade}/{sigla_estado}'
+
+        usuario = {
+            'Nome': nome_usuario,
+            'Data de Nascimento': data_nascimento,
+            'CPF': cpf,
+            'Endereço': endereco,
+            }
+        
+        print ('Usuário cadastrado com sucesso!')
+
+        usuarios.append(usuario)
+
+
+def criar_conta_corrente():
+    pass
+
+
 def main():
     saldo = 0
     limite = 500
     extrato = ''
+    usuarios = []
     total_saques = 0
     total_transacoes = 0
     LIMITE_SAQUES = 3
@@ -79,7 +123,7 @@ def main():
     while True:
         opcao = menu_opcoes()
 
-        if opcao == "0":
+        if opcao == "1":
             if total_transacoes >= LIMITE_TRANSACOES:
                 print ('Operação falhou! Número máximo de transações diárias excedido.')
                 continue
@@ -87,7 +131,7 @@ def main():
             valor_deposito = float(input("Digite o valor que deseja depositar: "))
             saldo, extrato, total_transacoes = depositar(valor_deposito, saldo, extrato, total_transacoes)
 
-        elif opcao == "1":
+        elif opcao == "2":
             if total_transacoes >= LIMITE_TRANSACOES:
                 print ('Operação falhou! Número máximo de transações diárias excedido.')
                 continue
@@ -99,10 +143,18 @@ def main():
             valor_saque = float(input("Digite o valor que deseja sacar: "))  
             saldo, extrato, total_saques, total_transacoes = sacar(valor=valor_saque, saldo=saldo, extrato=extrato, limite=limite, total_saques=total_saques, total_transacoes=total_transacoes)
 
-        elif opcao == "2":
+        elif opcao == "3":
             exibir_extrato(saldo, extrato)
 
-        elif opcao == "3":
+        elif opcao == '4':
+            cadastrar_usuario(usuarios)
+            print(usuarios)
+
+        elif opcao == '5':
+            criar_conta_corrente()
+            continue
+
+        elif opcao == "0":
             print("Saindo...")
             break
 
