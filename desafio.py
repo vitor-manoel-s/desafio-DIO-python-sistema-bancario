@@ -66,7 +66,6 @@ def exibir_extrato(saldo, /, *, extrato):
     else:
         print(extrato)
     print(f"\nSaldo: R$ {saldo:.2f}")
-    print("="*100)
 
 
 def filtrar_usuarios(usuarios,cpf):
@@ -128,9 +127,10 @@ def criar_conta_corrente(contas, usuarios):
 
 
 def listar_usuarios(usuarios):
+    print(' USUÁRIOS '.center(100, '='))
     for usuario in usuarios:
-        print(usuario)
-
+        print(f'Usuário: {usuario['Nome']}  CPF: {usuario['CPF']}')
+        
 
 def listar_contas(contas):
     for conta in contas:
