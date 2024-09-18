@@ -31,7 +31,3 @@ mensagem: Não foram realizadas movimentações.
 Os valores devem ser exibidos utilizando o formato R$ xxx.xx,
 exemplo:
 1500.45 = R$ 1500.45
-
-
-﻿# Desafio 2: Otimizando o Sistema Bancário com Funções Python
-Neste desafio, você terá a oportunidade de otimizar o Sistema Bancário previamente desenvolvido com o uso de funções Python. O objetivo é aprimorar a estrutura e a eficiência do sistema, implementando as operações de depósito, saque e extrato em funções específicas. Você terá a chance de refatorar o código existente, dividindo-o em funções reutilizáveis, facilitando a manutenção e o entendimento do sistema como um todo.
