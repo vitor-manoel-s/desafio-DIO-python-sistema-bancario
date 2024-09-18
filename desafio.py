@@ -28,6 +28,8 @@ def depositar(valor, saldo, extrato, total_transacoes, /):
     
     else:
         print('Operação falhou! O valor informado é inválido.')
+    
+    return saldo, extrato, total_transacoes
 
 
 def sacar(*, valor, saldo, extrato, limite, total_saques, total_transacoes):
@@ -47,6 +49,8 @@ def sacar(*, valor, saldo, extrato, limite, total_saques, total_transacoes):
     
     else:
         print("Operação falhou! O valor informado é inválido.")
+
+    return saldo, extrato,  total_saques, total_transacoes
 
 
 def atualizar_extrato(*,valor, tipo_transacao):
@@ -103,7 +107,7 @@ def main():
             break
 
         else:
-            ("Operação inválida, por favor selecione novemente a operação desejada.")
+            print("Operação inválida, por favor selecione novemente a operação desejada.")
     
 
 main()
