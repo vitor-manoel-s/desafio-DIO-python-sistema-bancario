@@ -3,20 +3,18 @@ from datetime import datetime
 
 def menu_opcoes():
     menu = """
-    =========== MENU ==========
+=============================================== MENU ===============================================
 
-    [1] Deposito
-    [2] Saque
-    [3] Extrato
-    [4] Criar Usuário
-    [5] Criar Conta Corrente
-    [6] Listar Usuários
-    [7] Listar Contas
-    [0] Sair
+[1] Depósito
+[2] Saque
+[3] Extrato
+[4] Criar Usuário
+[5] Criar Conta Corrente
+[6] Listar Usuários
+[7] Listar Contas
+[0] Sair
 
-    ===========================
-
-    => """
+=> """
     
     return input(menu)
 
@@ -24,7 +22,7 @@ def menu_opcoes():
 def depositar(valor, saldo, extrato, total_transacoes, /):
     if valor > 0:
         saldo += valor
-        extrato += atualizar_extrato(valor=valor, tipo_transacao='Deposito')
+        extrato += atualizar_extrato(valor=valor, tipo_transacao='Depósito')
 
         print("\nOperação realizada com sucesso!")
         
@@ -61,7 +59,7 @@ def atualizar_extrato(*,valor, tipo_transacao):
     return (f"Tipo da Transação: {tipo_transacao}    Valor: R$ {valor:.2f}    Data da transação: {datetime.now()}\n")
 
 
-def exibir_extrato(saldo, extrato):
+def exibir_extrato(saldo, /, *, extrato):
     print(" EXTRATO ".center(100, "="))
     if not extrato: 
         print("Não foram realizadas movimentações.")
@@ -77,7 +75,6 @@ def filtrar_usuarios(usuarios,cpf):
 
 
 def cadastrar_usuario(usuarios):
-        nome_usuario = input('Nome completo do usuário: ')
         cpf = input('Informe o cpf(somente números): ')
         cpf = cpf.replace('.', '', 2)
         cpf = cpf.replace('-', '')
@@ -85,10 +82,11 @@ def cadastrar_usuario(usuarios):
         existe_usuario = filtrar_usuarios(usuarios, cpf)
         
         if existe_usuario:
-            print(f'\nJá existe usuário cadastrado com o CPF: {cpf}')
+            print(f'\nJá existe um usuário cadastrado com o CPF: {cpf}')
             return
 
-        data_nascimento = input('Data de nascimento do usuário: ')
+        nome_usuario = input('Nome completo do usuário: ')
+        data_nascimento = input('Data de nascimento do usuário(dd/mm/aa): ')
         logradouro = input('Digite o logradouro: ')
         numero = input('Digite o número do endereço: ')
         bairro = input('Digite o bairro: ')
@@ -109,16 +107,17 @@ def cadastrar_usuario(usuarios):
 
 
 def criar_conta_corrente(contas, usuarios):
-    cpf = input("Informe o cpf do usuário: ")
+    cpf = input("Informe o cpf do usuário(somento números): ")
+    cpf = cpf.replace('.', '', 2)
+    cpf = cpf.replace('-', '')
     usuario_cadastrado = filtrar_usuarios(usuarios, cpf)
 
     if usuario_cadastrado:
-        numero_conta = len(contas) + 1
 
         conta = {
             'Usuário': usuario_cadastrado['Nome'],
             'CPF': usuario_cadastrado['CPF'],
-            'Número da Conta': numero_conta,
+            'Número da Conta': len(contas) + 1,
             'Agência': '0001'
         }
 
@@ -128,14 +127,18 @@ def criar_conta_corrente(contas, usuarios):
         print('\nEsse usuário não está cadastrado!')
 
 
-def listar_usuarios():
-    pass
+def listar_usuarios(usuarios):
+    for usuario in usuarios:
+        print(usuario)
 
 
-def listar_contas():
-    pass
-    
-
+def listar_contas(contas):
+    for conta in contas:
+        print('='*100)
+        print(f'Agêngia: {conta['Agência']}')
+        print(f'Número da Conta: {conta['Número da Conta']}')
+        print(f'Titular: {conta['Usuário']}\n') 
+        
 
 def main():
     saldo = 0
@@ -172,7 +175,7 @@ def main():
             saldo, extrato, total_saques, total_transacoes = sacar(valor=valor_saque, saldo=saldo, extrato=extrato, limite=limite, total_saques=total_saques, total_transacoes=total_transacoes)
 
         elif opcao == "3":
-            exibir_extrato(saldo, extrato)
+            exibir_extrato(saldo, extrato=extrato)
 
         elif opcao == '4':
             cadastrar_usuario(usuarios)
@@ -182,11 +185,9 @@ def main():
 
         elif opcao == '6':
             listar_usuarios(usuarios)
-            pass
         
         elif opcao == '7':
             listar_contas(contas)
-            pass
 
         elif opcao == "0":
             print("Saindo...")
