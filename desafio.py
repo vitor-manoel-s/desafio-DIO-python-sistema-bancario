@@ -10,6 +10,8 @@ def menu_opcoes():
     [3] Extrato
     [4] Criar Usuário
     [5] Criar Conta Corrente
+    [6] Listar Usuários
+    [7] Listar Contas
     [0] Sair
 
     ===========================
@@ -24,33 +26,33 @@ def depositar(valor, saldo, extrato, total_transacoes, /):
         saldo += valor
         extrato += atualizar_extrato(valor=valor, tipo_transacao='Deposito')
 
-        print("Operação realizada com sucesso!")
+        print("\nOperação realizada com sucesso!")
         
         return saldo, extrato, total_transacoes+1
     
     else:
-        print('Operação falhou! O valor informado é inválido.')
+        print('\nOperação falhou! O valor informado é inválido.')
     
     return saldo, extrato, total_transacoes
 
 
 def sacar(*, valor, saldo, extrato, limite, total_saques, total_transacoes):
     if saldo < valor:
-        print("Operação falhou! Saldo insuficiente.")
+        print("\nOperação falhou! Saldo insuficiente.")
 
     elif valor > limite:
-        print("Operação falhou! O valor do saque excede o limite.")
+        print("\nOperação falhou! O valor do saque excede o limite.")
 
     elif valor > 0:
         saldo -= valor
         extrato += atualizar_extrato(valor=valor, tipo_transacao='Saque')
         
-        print("Operação realizada com sucesso!")
+        print("\nOperação realizada com sucesso!")
         
         return saldo, extrato, total_saques+1, total_transacoes+1
     
     else:
-        print("Operação falhou! O valor informado é inválido.")
+        print("\nOperação falhou! O valor informado é inválido.")
 
     return saldo, extrato,  total_saques, total_transacoes
 
@@ -71,7 +73,7 @@ def exibir_extrato(saldo, extrato):
 
 def filtrar_usuarios(usuarios,cpf):
     usuarios_filtrados = [usuario for usuario in usuarios if usuario['CPF'] == cpf]
-    return usuarios_filtrados if usuarios_filtrados else None
+    return usuarios_filtrados[0] if usuarios_filtrados else None
 
 
 def cadastrar_usuario(usuarios):
@@ -101,13 +103,38 @@ def cadastrar_usuario(usuarios):
             'Endereço': endereco,
             }
         
-        print ('Usuário cadastrado com sucesso!')
+        print ('\nUsuário cadastrado com sucesso!')
 
         usuarios.append(usuario)
 
 
-def criar_conta_corrente():
+def criar_conta_corrente(contas, usuarios):
+    cpf = input("Informe o cpf do usuário: ")
+    usuario_cadastrado = filtrar_usuarios(usuarios, cpf)
+
+    if usuario_cadastrado:
+        numero_conta = len(contas) + 1
+
+        conta = {
+            'Usuário': usuario_cadastrado['Nome'],
+            'CPF': usuario_cadastrado['CPF'],
+            'Número da Conta': numero_conta,
+            'Agência': '0001'
+        }
+
+        contas.append(conta)
+        print('\nConta criado com sucesso!')
+    else:
+        print('\nEsse usuário não está cadastrado!')
+
+
+def listar_usuarios():
     pass
+
+
+def listar_contas():
+    pass
+    
 
 
 def main():
@@ -115,6 +142,7 @@ def main():
     limite = 500
     extrato = ''
     usuarios = []
+    contas = []
     total_saques = 0
     total_transacoes = 0
     LIMITE_SAQUES = 3
@@ -148,11 +176,17 @@ def main():
 
         elif opcao == '4':
             cadastrar_usuario(usuarios)
-            print(usuarios)
 
         elif opcao == '5':
-            criar_conta_corrente()
-            continue
+            criar_conta_corrente(contas, usuarios)
+
+        elif opcao == '6':
+            listar_usuarios(usuarios)
+            pass
+        
+        elif opcao == '7':
+            listar_contas(contas)
+            pass
 
         elif opcao == "0":
             print("Saindo...")
