@@ -190,13 +190,19 @@ def filtrar_clientes(clientes,cpf):
     return usuarios_filtrados[0] if usuarios_filtrados else None
 
 
-def recuperar_conta_cliente(cliente):
+def buscar_conta_cliente(cliente):
     if not cliente.contas:
-        print("\nCliente não possui conta!")
+        print("\nEsse cliente não possui contas!")
         return
 
-    # FIXME: não permite cliente escolher a conta
-    return cliente.contas[0] 
+    for conta in cliente.contas:
+        print(conta)
+
+    nro_conta = int(input('\nInforme o número da conta: '))
+    for conta in cliente.contas:
+        if conta.numero == nro_conta:
+            conta_selecianada = conta
+            return conta_selecianada
     
 
 def cadastrar_cliente(clientes):
@@ -252,7 +258,7 @@ def depositar(clientes):
         print('\nCliente não cadastrado!')
         return
 
-    conta = recuperar_conta_cliente(cliente)
+    conta = buscar_conta_cliente(cliente)
     if not conta:
         return
     
@@ -272,7 +278,7 @@ def sacar(clientes):
         print('\nCliente não cadastrado!')
         return
 
-    conta = recuperar_conta_cliente(cliente)
+    conta = buscar_conta_cliente(cliente)
     if not conta:
         return
 
@@ -292,7 +298,7 @@ def exibir_extrato(clientes):
         print('\nCliente não cadastrado!')
         return
 
-    conta = recuperar_conta_cliente(cliente)
+    conta = buscar_conta_cliente(cliente)
     if not conta:
         return
     
