@@ -198,11 +198,13 @@ def buscar_conta_cliente(cliente):
     for conta in cliente.contas:
         print(conta)
 
-    nro_conta = int(input('\nInforme o número da conta: '))
+    nro_conta = int(input('\nInforme o número da conta: ')) # Solicita o número da conta em que será realizada a operação
+
+    # Busca a conta em que será realizada a operação utilizando o número informado
     for conta in cliente.contas:
-        if conta.numero == nro_conta:
+        if conta.numero == nro_conta:   
             conta_selecianada = conta
-            return conta_selecianada
+            return conta_selecianada    # retorna a conta em que será realizada a operação
     
 
 def cadastrar_cliente(clientes):
