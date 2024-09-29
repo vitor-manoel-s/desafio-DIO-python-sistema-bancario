@@ -107,7 +107,7 @@ class ContaCorrente(Conta):
             print ('\nOperação falhou! O valor do saque excede o limite.')
             return False
 
-        elif valor > 0:
+        else:
             return super().sacar(valor)
         
         return False
@@ -117,7 +117,7 @@ class ContaCorrente(Conta):
             print ('\nOperação falhou! Número máximo de trasações diários excedido.')
             return False
         
-        elif valor > 0:
+        else:
             return super().depositar(valor)
         
         return False
@@ -196,12 +196,12 @@ def buscar_conta_cliente(cliente):
     if not cliente.contas:
         print("\nEsse cliente não possui contas!")
         return
-
+    
     for conta in cliente.contas:
         print(conta)
 
     nro_conta = int(input('\nInforme o número da conta: ')) # Solicita o número da conta em que será realizada a operação
-
+    
     # Busca a conta em que será realizada a operação utilizando o número informado
     for conta in cliente.contas:
         if conta.numero == nro_conta:   
