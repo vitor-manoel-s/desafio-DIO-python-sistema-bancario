@@ -22,7 +22,7 @@ class PessoaFisica(Cliente):
         self.data_nascimento = data_nascimento
     
     def __str__(self):
-        return f"Nome: {self.nome}\nCpf: {self.cpf}\nData de Nascimento: {self.data_nascimento}\nEndereçe: {self.endereco}"
+        return f"Nome: {self.nome}    Cpf: {self.cpf}    Data de Nascimento: {self.data_nascimento}    Endereçe: {self.endereco}"
 
 
 class Conta:
@@ -178,6 +178,8 @@ def menu_opcoes():
 [3] Depósito
 [4] Saque
 [5] Extrato da conta
+[6] Listar Clientes
+[7] Listar Contas
 [0] Sair
 
 => """
@@ -318,6 +320,18 @@ def exibir_extrato(clientes):
     print(f"\nSaldo:    R$ {conta.saldo:.2f}")
 
 
+def listar_clientes(clientes):
+    print(" CLIENTES ".center(100, "="))
+    for cliente in clientes:
+        print(cliente)
+
+
+def listar_contas(contas):
+    print(" CONTAS ".center(100, "="))
+    for conta in contas:
+        print(conta)
+
+
 def main():
     clientes = []
     contas = []
@@ -337,6 +351,10 @@ def main():
                 sacar(clientes)
             case '5':
                 exibir_extrato(clientes)
+            case '6':
+                listar_clientes(clientes)
+            case '7':
+                listar_contas(contas)
             case '0':
                 print('Saindo...')
                 break
